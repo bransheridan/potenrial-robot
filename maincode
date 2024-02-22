@@ -1,0 +1,56 @@
+check {
+	dependsOn checkstyleNohttp
+}
+
+allprojects {
+	group "org.springframework.boot"
+
+	repositories {
+		mavenCentral()
+		if (version.contains('-')) {
+			maven { url "https://repo.spring.io/milestone" }
+		}
+		if (version.endsWith('-SNAPSHOT')) {
+			maven { url "https://repo.spring.io/snapshot" }
+		}
+	}
+
+	configurations.all {
+		resolutionStrategy.cacheChangingModulesFor 0, "minutes"
+	}
+}
+
+
+
+
+
+pluginManagement {
+	repositories {
+		mavenCentral()
+		gradlePluginPortal()
+		if (version.endsWith('-SNAPSHOT')) {
+			maven { url "https://repo.spring.io/snapshot" }
+		}
+	}
+	resolutionStrategy {
+		eachPlugin {
+			if (requested.id.id == "org.jetbrains.kotlin.jvm") {
+				useVersion "${kotlinVersion}"
+			}
+			if (requested.id.id == "org.jetbrains.kotlin.plugin.spring") {
+				useVersion "${kotlinVersion}"
+			}
+		}
+	}
+}
+
+plugins {
+	id "com.gradle.enterprise" version "3.15.1"
+	id "io.spring.ge.conventions" version "0.0.15"
+}
+root=true
+
+[*.{groovy,java,kt,xml}]
+indent_style = tab
+indent_size = 4
+continuation_indent_size = 8

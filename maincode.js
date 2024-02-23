@@ -48,7 +48,4 @@ pluginManagement {
 }
 root=true
 
-[*.{groovy,java,kt,xml}]
-indent_style = tab
-indent_size = 4
-continuation_indent_size = 8
+
